@@ -27,7 +27,7 @@ public class StepDefinitions {
     @And("I search for selenium webdriver")
     public void i_search_for_selenium_webdriver() {
         By searchBox = By.id("APjFqb");
-        driver.findElement(searchBox).sendKeys("selenium webdriver" + Keys.RETURN);
+        driver.findElement(searchBox).sendKeys("selenium webdriver");
         driver.findElement(searchBox).submit();
     }
 

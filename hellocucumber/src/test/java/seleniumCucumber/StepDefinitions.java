@@ -1,12 +1,16 @@
-package selenium;
+package seleniumCucumber;
 
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
+import io.cucumber.java.Scenario;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -14,20 +18,19 @@ public class StepDefinitions {
     WebDriver driver;
 
     @Given("my browser is open")
-    public void my_browser_is_open() {
+    public void myBrowserIsOpen() {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
     }
-
     @When("I navigate to google")
     public void i_navigate_to_google() {
         driver.navigate().to("https://www.google.com.sa/");
     }
 
-    @And("I search for selenium webdriver")
-    public void i_search_for_selenium_webdriver() {
+    @And("I search for {string}")
+    public void i_search_for_selenium_webdriver(String search) {
         By searchBox = By.id("APjFqb");
-        driver.findElement(searchBox).sendKeys("selenium webdriver");
+        driver.findElement(searchBox).sendKeys(search);
         driver.findElement(searchBox).submit();
     }
 
@@ -36,11 +39,21 @@ public class StepDefinitions {
         By resultState = By.id("result-stats");
         String actualText = driver.findElement(resultState).getText();
         Assertions.assertNotEquals("", actualText);
-        driver.quit();
     }
 
-   /* @After
-    public void after(){
-        driver.quit();
+
+   /* @Before
+    public void myBrowserIsOpen() {
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
     }*/
+
+   @After
+    public void after(Scenario scenario){
+       if (scenario.isFailed()){
+           byte [] screenShot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+           scenario.attach(screenShot, "image/png","screenShot-"+System.currentTimeMillis());
+       }
+        driver.quit();
+    }
 }

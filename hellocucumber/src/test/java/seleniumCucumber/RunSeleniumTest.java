@@ -10,7 +10,7 @@ import static io.cucumber.junit.platform.engine.Constants.*;
 @Suite
 @IncludeEngines("cucumber")
 @SelectPackages("seleniumCucumber")
-@ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "pretty, html:target/cucumber.html")
-@ConfigurationParameter(key = FILTER_TAGS_PROPERTY_NAME, value = "@Search")
+@ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "pretty, html:target/cucumber.html, io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm")
+@ConfigurationParameter(key = FILTER_TAGS_PROPERTY_NAME, value = "@example")
 public class RunSeleniumTest {
 }

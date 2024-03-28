@@ -48,7 +48,7 @@ public class StepDefinitions {
 
    @After
     public void after(Scenario scenario){
-       if (scenario.isFailed()){
+       if (!(scenario.isFailed())){
            byte [] screenShot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
            scenario.attach(screenShot, "image/png","screenShot-"+System.currentTimeMillis());
        }
